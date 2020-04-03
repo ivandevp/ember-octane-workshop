@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | login-form', function (hooks) {
@@ -24,5 +24,11 @@ module('Integration | Component | login-form', function (hooks) {
         'Sample McData',
       ]
     );
+
+    const button = /**@type {HTMLButtonElement} */(find('input[type="submit"]'));
+    assert.equal(button.disabled, true, 'Button is disabled by default');
+
+    await fillIn('select', '1');
+    assert.equal(button.disabled, false, 'After selecting a user button is enabled');
   });
 });
